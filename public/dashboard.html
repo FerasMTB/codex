@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Dashboard - AI Gym Assistant</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="signup.html">Sign Up</a>
+    <a href="login.html">Login</a>
+  </nav>
+  <h1>Dashboard</h1>
+  <h2>Workouts</h2>
+  <button id="getWorkouts">Load Workouts</button>
+  <ul id="workoutList"></ul>
+  <h3>Log Workout</h3>
+  <form id="logForm">
+    <input type="email" id="logEmail" placeholder="Email" required>
+    <input type="number" id="logWorkoutId" placeholder="Workout ID" required>
+    <button type="submit">Log</button>
+  </form>
+  <h3>AI Generated Workout</h3>
+  <form id="aiForm">
+    <input type="email" id="aiEmail" placeholder="Email" required>
+    <button type="submit">Get Plan</button>
+  </form>
+  <h3>Send Feedback</h3>
+  <form id="feedbackForm">
+    <input type="email" id="fbEmail" placeholder="Email" required>
+    <input type="text" id="fbText" placeholder="Your feedback" required>
+    <button type="submit">Send</button>
+  </form>
+  <h3>Voice Command</h3>
+  <form id="voiceForm">
+    <input type="email" id="voiceEmail" placeholder="Email" required>
+    <input type="text" id="voiceText" placeholder="Speech text" required>
+    <button type="submit">Send Voice</button>
+  </form>
+  <h3>Wearable Data</h3>
+  <form id="wearableForm">
+    <input type="email" id="wearEmail" placeholder="Email" required>
+    <input type="number" id="wearSteps" placeholder="Steps">
+    <input type="number" id="wearHR" placeholder="Heart Rate">
+    <button type="submit">Submit Data</button>
+  </form>
+  <h3>Tutorial Videos</h3>
+  <button id="loadTutorials">Load Videos</button>
+  <ul id="tutorialList"></ul>
+  <h3>Share Progress</h3>
+  <form id="shareForm">
+    <input type="email" id="shareEmail" placeholder="Email" required>
+    <button type="submit">Share</button>
+  </form>
+  <pre id="output"></pre>
+  <script src="dashboard.js"></script>
+</body>
+</html>
