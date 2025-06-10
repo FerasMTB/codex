@@ -2,11 +2,11 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>AI Gym Assistant - Stage 1</title>
+  <title>AI Gym Assistant - Stage 4</title>
 </head>
 <body>
   <h1>Welcome to AI Gym Assistant</h1>
-  <p>Stage 1: Basic sign-up and login.</p>
+  <p>Stage 4: Wearable integration and social sharing.</p>
   <h2>Sign Up</h2>
   <form id="signupForm">
     <input type="email" id="signupEmail" placeholder="Email" required>
@@ -30,6 +30,38 @@
     <input type="email" id="logEmail" placeholder="Email" required>
     <input type="number" id="logWorkoutId" placeholder="Workout ID" required>
     <button type="submit">Log</button>
+  </form>
+  <h3>AI Generated Workout</h3>
+  <form id="aiForm">
+    <input type="email" id="aiEmail" placeholder="Email" required>
+    <button type="submit">Get Plan</button>
+  </form>
+  <h3>Send Feedback</h3>
+  <form id="feedbackForm">
+    <input type="email" id="fbEmail" placeholder="Email" required>
+    <input type="text" id="fbText" placeholder="Your feedback" required>
+    <button type="submit">Send</button>
+  </form>
+  <h3>Voice Command</h3>
+  <form id="voiceForm">
+    <input type="email" id="voiceEmail" placeholder="Email" required>
+    <input type="text" id="voiceText" placeholder="Speech text" required>
+    <button type="submit">Send Voice</button>
+  </form>
+  <h3>Wearable Data</h3>
+  <form id="wearableForm">
+    <input type="email" id="wearEmail" placeholder="Email" required>
+    <input type="number" id="wearSteps" placeholder="Steps">
+    <input type="number" id="wearHR" placeholder="Heart Rate">
+    <button type="submit">Submit Data</button>
+  </form>
+  <h3>Tutorial Videos</h3>
+  <button id="loadTutorials">Load Videos</button>
+  <ul id="tutorialList"></ul>
+  <h3>Share Progress</h3>
+  <form id="shareForm">
+    <input type="email" id="shareEmail" placeholder="Email" required>
+    <button type="submit">Share</button>
   </form>
   <pre id="output"></pre>
   <script>
@@ -71,6 +103,39 @@
       e.preventDefault();
       const data = { email: logEmail.value, workoutId: logWorkoutId.value };
       const out = await request('/log', data);
+      output.textContent = JSON.stringify(out, null, 2);
+    });
+    document.getElementById('aiForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const out = await request('/ai-workout', { email: aiEmail.value });
+      output.textContent = out.workout;
+    });
+    document.getElementById('feedbackForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const data = { email: fbEmail.value, feedback: fbText.value };
+      const out = await request('/feedback', data);
+      output.textContent = JSON.stringify(out, null, 2);
+    });
+    document.getElementById('voiceForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const data = { email: voiceEmail.value, transcript: voiceText.value };
+      const out = await request('/voice', data);
+      output.textContent = JSON.stringify(out, null, 2);
+    });
+    document.getElementById('wearableForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const data = { email: wearEmail.value, steps: wearSteps.value, heart_rate: wearHR.value };
+      const out = await request('/wearable', data);
+      output.textContent = JSON.stringify(out, null, 2);
+    });
+    document.getElementById('loadTutorials').addEventListener('click', async () => {
+      const res = await fetch('/tutorials');
+      const vids = await res.json();
+      tutorialList.innerHTML = vids.map(v => `<li><a href="${v}">${v}</a></li>`).join('');
+    });
+    document.getElementById('shareForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const out = await request('/share', { email: shareEmail.value });
       output.textContent = JSON.stringify(out, null, 2);
     });
   </script>
