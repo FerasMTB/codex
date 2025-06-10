@@ -29,3 +29,19 @@ This repository tracks the development stages for building a personal training w
 - [x] Allow logging of completed workouts.
 
 The `index.js` server and `public/index.html` begin the implementation of Stage 1.
+
+## Stage 2 Tasks
+
+- [x] Integrate Gemini API for personalized workouts.
+- [x] Capture user feedback to refine workout suggestions.
+
+## Stage 3 Tasks
+
+- [x] Enable voice command feedback submissions.
+- [x] Provide tutorial video listings.
+- [x] Record basic analytics for user actions.
+
+## Stage 4 Tasks
+
+- [x] Accept wearable data for personalization.
+- [x] Implement social sharing links and gamified points.
