@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>AI Gym Assistant - Stage 1</title>
+</head>
+<body>
+  <h1>Welcome to AI Gym Assistant</h1>
+  <p>Stage 1: Basic sign-up and login.</p>
+  <h2>Sign Up</h2>
+  <form id="signupForm">
+    <input type="email" id="signupEmail" placeholder="Email" required>
+    <input type="password" id="signupPassword" placeholder="Password" required>
+    <input type="number" id="signupAge" placeholder="Age">
+    <input type="number" id="signupWeight" placeholder="Weight (kg)">
+    <input type="text" id="signupGoals" placeholder="Goals">
+    <button type="submit">Sign Up</button>
+  </form>
+  <h2>Login</h2>
+  <form id="loginForm">
+    <input type="email" id="loginEmail" placeholder="Email" required>
+    <input type="password" id="loginPassword" placeholder="Password" required>
+    <button type="submit">Login</button>
+  </form>
+  <h2>Workouts</h2>
+  <button id="getWorkouts">Load Workouts</button>
+  <ul id="workoutList"></ul>
+  <h3>Log Workout</h3>
+  <form id="logForm">
+    <input type="email" id="logEmail" placeholder="Email" required>
+    <input type="number" id="logWorkoutId" placeholder="Workout ID" required>
+    <button type="submit">Log</button>
+  </form>
+  <pre id="output"></pre>
+  <script>
+    async function request(url, data) {
+      const res = await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+      return res.json();
+    }
+    document.getElementById('signupForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const data = {
+        email: signupEmail.value,
+        password: signupPassword.value,
+        age: signupAge.value,
+        weight: signupWeight.value,
+        goals: signupGoals.value
+      };
+      const out = await request('/signup', data);
+      output.textContent = JSON.stringify(out, null, 2);
+    });
+    document.getElementById('loginForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const data = {
+        email: loginEmail.value,
+        password: loginPassword.value
+      };
+      const out = await request('/login', data);
+      output.textContent = JSON.stringify(out, null, 2);
+    });
+    document.getElementById('getWorkouts').addEventListener('click', async () => {
+      const res = await fetch('/workouts');
+      const data = await res.json();
+      workoutList.innerHTML = data.map(w => `<li>${w.id}: ${w.name} - ${w.sets}x${w.reps}</li>`).join('');
+    });
+    document.getElementById('logForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const data = { email: logEmail.value, workoutId: logWorkoutId.value };
+      const out = await request('/log', data);
+      output.textContent = JSON.stringify(out, null, 2);
+    });
+  </script>
+</body>
+</html>
